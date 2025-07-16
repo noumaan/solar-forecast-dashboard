@@ -1,0 +1,17 @@
+/* Solar Forecast Display Plugin Styles */
+
+.sfd-inline {
+    font-weight: 500;
+    color: inherit;
+    display: inline;
+    font-size: inherit;
+}
+
+.sfd-block {
+    margin: 1em 0;
+    padding: 1em;
+    background: #f9f9f9;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: inherit;
+}
