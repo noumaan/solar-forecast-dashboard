@@ -2,8 +2,8 @@
 // Exit if accessed directly
 if (!defined('ABSPATH')) exit;
 
-function sfd_get_forecast_data($api_key, $timezone = 'Asia/Karachi') {
-    $site_id = get_option('sfd_site_id');
+function solfordash_get_forecast_data($api_key, $timezone = 'Asia/Karachi') {
+    $site_id = get_option('solfordash_site_id');
     if (!$site_id) return false;
 
     $url = "https://api.solcast.com.au/rooftop_sites/$site_id/forecasts?format=json";
@@ -34,12 +34,12 @@ function sfd_get_forecast_data($api_key, $timezone = 'Asia/Karachi') {
     return $converted;
 }
 
-function sfd_fetch_and_store_forecast() {
+function solfordash_fetch_and_store_forecast() {
     global $wpdb;
 
-    $api_key_encrypted = get_option('sfd_api_key');
-    $site_id = get_option('sfd_site_id');
-    $timezone = get_option('sfd_timezone', 'Asia/Karachi');
+    $api_key_encrypted = get_option('solfordash_api_key');
+    $site_id = get_option('solfordash_site_id');
+    $timezone = get_option('solfordash_timezone', 'Asia/Karachi');
 
     if (defined('WP_DEBUG') && WP_DEBUG) {
         error_log("Manual fetch: Encrypted API key = $api_key_encrypted, Site ID = $site_id");
@@ -47,13 +47,13 @@ function sfd_fetch_and_store_forecast() {
 
     if (!$api_key_encrypted || !$site_id) return;
 
-    $api_key = sfd_decrypt($api_key_encrypted);
+    $api_key = solfordash_decrypt($api_key_encrypted);
 
     if (defined('WP_DEBUG') && WP_DEBUG) {
         error_log("Manual fetch: Decrypted API key = $api_key");
     }
 
-    $forecast_data = sfd_get_forecast_data($api_key, $timezone);
+    $forecast_data = solfordash_get_forecast_data($api_key, $timezone);
 
     if (!$forecast_data) return;
 
@@ -68,7 +68,7 @@ function sfd_fetch_and_store_forecast() {
     if (empty($filtered)) return;
 
     // Avoid duplicates
-    $table = $wpdb->prefix . 'sfd_reports';
+    $table = $wpdb->prefix . 'solfordash_reports';
     $exists = $wpdb->get_var($wpdb->prepare(
         "SELECT COUNT(*) FROM $table WHERE forecast_date = %s",
         $target_date
@@ -98,18 +98,17 @@ function sfd_fetch_and_store_forecast() {
     }
     
     // Send email report if enabled
-    if (get_option('sfd_email_enabled')) {
-        $recipient = get_option('sfd_email_recipient', get_option('admin_email'));
-        sfd_send_email_report($filtered, $target_date, $recipient);
+    if (get_option('solfordash_email_enabled')) {
+        $recipient = get_option('solfordash_email_recipient', get_option('admin_email'));
+        solfordash_send_email_report($filtered, $target_date, $recipient);
     }
 }
 
-    // get latest report 
-    
-function sfd_get_latest_report_row() {
+// get latest report 
+function solfordash_get_latest_report_row() {
 	global $wpdb;
 
-	$table = $wpdb->prefix . 'sfd_reports';
+	$table = $wpdb->prefix . 'solfordash_reports';
 
 	$sql = "SELECT * FROM $table ORDER BY forecast_date DESC LIMIT 1";
 	$row = $wpdb->get_row($sql, ARRAY_A);

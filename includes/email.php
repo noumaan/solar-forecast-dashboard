@@ -1,7 +1,7 @@
 <?php 
-function sfd_send_email_report($data, $forecast_date, $recipient = null) {
+function solfordash_send_email_report($data, $forecast_date, $recipient = null) {
 	if (!$recipient) {
-		$recipient = get_option('sfd_email_recipient', get_option('admin_email'));
+		$recipient = get_option('solfordash_email_recipient', get_option('admin_email'));
 	}
 
 	if (empty($data)) {
@@ -10,7 +10,6 @@ function sfd_send_email_report($data, $forecast_date, $recipient = null) {
 	}
 
 	$subject = sprintf(
-	
 		__('Solar Forecast Report for %s', 'solar-forecast-dashboard'),
 		$forecast_date
 	);

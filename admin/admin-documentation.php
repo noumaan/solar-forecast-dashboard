@@ -2,8 +2,8 @@
 // Exit if accessed directly
 if (!defined('ABSPATH')) exit;
 
-if (!function_exists('sfd_render_documentation_page')) {
-    function sfd_render_documentation_page() {
+if (!function_exists('solfordash_render_documentation_page')) {
+    function solfordash_render_documentation_page() {
         ?>
         <div class="wrap">
             <h1><?php echo esc_html__('Solar Forecast Plugin Documentation', 'solar-forecast-dashboard'); ?></h1>
@@ -19,31 +19,31 @@ if (!function_exists('sfd_render_documentation_page')) {
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>[sfd_forecast_tomorrow]</code></td>
+                        <td><code>[solfordash_forecast_tomorrow]</code></td>
                         <td><?php esc_html_e('Shows tomorrow’s expected solar forecast in kWh.', 'solar-forecast-dashboard'); ?></td>
                     </tr>
                     <tr>
-                        <td><code>[sfd_today_generation]</code></td>
+                        <td><code>[solfordash_today_generation]</code></td>
                         <td><?php esc_html_e('Displays today’s total estimated solar energy generation.', 'solar-forecast-dashboard'); ?></td>
                     </tr>
                     <tr>
-                        <td><code>[sfd_month_summary]</code></td>
+                        <td><code>[solfordash_month_summary]</code></td>
                         <td><?php esc_html_e('Shows month-to-date solar generation.', 'solar-forecast-dashboard'); ?></td>
                     </tr>
                     <tr>
-                        <td><code>[sfd_generation_year]</code></td>
-                        <td><?php esc_html_e('Displays year-to-date solar generation and trees saved equivalent.', 'solar-forecast-dashboard'); ?></td>
+                        <td><code>[solfordash_year_summary]</code></td>
+                        <td><?php esc_html_e('Displays year-to-date total solar generation.', 'solar-forecast-dashboard'); ?></td>
                     </tr>
                     <tr>
-                        <td><code>[sfd_public_reports]</code></td>
+                        <td><code>[solfordash_public_reports]</code></td>
                         <td><?php esc_html_e('Shows a public-facing reports table with no sensitive information.', 'solar-forecast-dashboard'); ?></td>
                     </tr>
                     <tr>
-                        <td><code>[sfd_monthly_impact]</code></td>
+                        <td><code>[solfordash_monthly_impact]</code></td>
                         <td><?php esc_html_e('Shows month-to-date environmental impact and trees saved.', 'solar-forecast-dashboard'); ?></td>
                     </tr>
                     <tr>
-                        <td><code>[sfd_yearly_impact]</code></td>
+                        <td><code>[solfordash_yearly_impact]</code></td>
                         <td><?php esc_html_e('Shows year-to-date environmental impact and trees saved.', 'solar-forecast-dashboard'); ?></td>
                     </tr>
                 </tbody>
@@ -63,13 +63,14 @@ if (!function_exists('sfd_render_documentation_page')) {
             <p><?php esc_html_e('The free tier of Solcast provides enough API requests for most small setups.', 'solar-forecast-dashboard'); ?></p>
 
             <h2 style="margin-top: 30px;"><?php esc_html_e('Data Storage & Deletion', 'solar-forecast-dashboard'); ?></h2>
-            <p><?php echo wp_kses_post(__('This plugin stores daily forecast data in a custom database table called <code>wp_sfd_reports</code>. These records allow you to view and compare past forecasts.', 'solar-forecast-dashboard')); ?></p>
+            <p><?php echo wp_kses_post(__('This plugin stores daily forecast data in a custom database table called <code>wp_solfordash_reports</code>. These records allow you to view and compare past forecasts.', 'solar-forecast-dashboard')); ?></p>
             <p><?php esc_html_e('If you want to remove specific reports, you can go to the Reports section in the plugin menu and use the "Delete" link next to each entry.', 'solar-forecast-dashboard'); ?></p>
             <p><?php esc_html_e('Deleted reports are permanently removed from the database and cannot be recovered.', 'solar-forecast-dashboard'); ?></p>
 
             <h2 style="margin-top: 30px;"><?php esc_html_e('Data Privacy & GDPR Compliance', 'solar-forecast-dashboard'); ?></h2>
-            <p><?php esc_html_e('This plugin does not collect or transmit any personal user data. All solar forecast data is fetched directly from the Solcast API using credentials you provide and is stored locally in your WordPress database. No data is sent to third-party servers other than Solcast.', 'solar-forecast-dashboard'); ?></p>
-            <p><?php esc_html_e('If you’re operating in a region covered by the GDPR or similar regulations, you should mention in your site’s privacy policy that your website uses third-party APIs to fetch non-personal forecast data, and that this data is used only to display solar energy reports.', 'solar-forecast-dashboard'); ?></p>
+            <p><?php esc_html_e('This plugin does not collect or transmit any personal user data. Solar forecast data is fetched directly from the Solcast API using credentials you provide and stored locally in your WordPress database. The plugin also loads Chart.js locally without contacting third-party servers.', 'solar-forecast-dashboard'); ?></p>
+            <p><?php esc_html_e('No personal information is shared externally. If you wish, you can mention in your site’s privacy policy that your website uses Solcast to fetch non-personal forecast data for display purposes.', 'solar-forecast-dashboard'); ?></p>
+
         </div>
         <?php
     }

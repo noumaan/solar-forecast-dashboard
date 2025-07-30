@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-function sfd_handle_csv_download() {
+function solfordash_handle_csv_download() {
     if ( ! current_user_can('manage_options') ) {
         wp_die('Unauthorized', 'Error', ['response' => 403]);
     }
@@ -16,12 +16,12 @@ function sfd_handle_csv_download() {
     $date  = sanitize_text_field($_GET['date']);
     $nonce = sanitize_text_field($_GET['_wpnonce']);
 
-    if ( ! wp_verify_nonce($nonce, 'sfd_download_' . $date) ) {
+    if ( ! wp_verify_nonce($nonce, 'solfordash_download_' . $date) ) {
         wp_die('Invalid nonce', 'Error', ['response' => 403]);
     }
 
     global $wpdb;
-    $table = $wpdb->prefix . 'sfd_reports';
+    $table = $wpdb->prefix . 'solfordash_reports';
     $row = $wpdb->get_row(
         $wpdb->prepare("SELECT * FROM $table WHERE forecast_date = %s", $date),
         ARRAY_A

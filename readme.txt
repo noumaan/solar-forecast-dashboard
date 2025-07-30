@@ -1,18 +1,18 @@
 === Solar Forecast Dashboard ===
 Contributors: noumaan 
-Tags: solar forecast, renewable energy, weather data, solcast, chart.js, energy monitoring  
-Requires at least: 5.5  
-Tested up to: 6.8  
+Tags: solar forecast, solar energy, solcast
+Requires at least: 5.8  
+Tested up to: 6.8.2  
 Requires PHP: 7.4  
 Stable tag: 1.0.0  
 License: GPLv2 or later  
 License URI: https://www.gnu.org/licenses/gpl-2.0.html  
 
-A custom plugin to fetch, store, and display solar power forecast data using the Solcast API. Includes charts, daily cron jobs, frontend shortcodes, and optional email reports.
+Fetch, store, and display solar power forecast data using the Solcast API. Includes charts, daily reports, frontend shortcodes, and email reports.
 
 == Description ==
 
-**Solar Forecast Display** is a lightweight and privacy-conscious plugin that integrates with the [Solcast API](https://solcast.com) to show solar power forecast data for your location.
+**Solar Forecast Dashboard** is a lightweight and privacy-conscious plugin that integrates with the [Solcast API](https://solcast.com) to show solar power forecast data for your location.
 
 Use it to display detailed 24-hour solar predictions, visualized with charts, and store historical forecast data for visitors to explore. It’s designed for small solar projects, educators, or anyone interested in solar insights.
 
@@ -28,8 +28,29 @@ Use it to display detailed 24-hour solar predictions, visualized with charts, an
 
 **Shortcodes:**
 
-- `[sfd_forecast]` – Displays a list of forecast reports with charts and CSV downloads
-- `[sfd_forecast_single]` – Shows a detailed chart for a specific date (via query string `?sfd_view=YYYY-MM-DD`)
+## Shortcodes
+
+- `[sfd_forecast_tomorrow]` – Displays the total solar energy forecast (in kWh) for **tomorrow** based on stored forecast data.
+
+- `[sfd_today_generation]` – Shows the total solar energy forecast (in kWh) for **today**.
+
+- `[sfd_month_summary]` – Outputs the total solar energy forecast (in kWh) for the **current month**, summing up all available daily forecasts.
+
+- `[sfd_monthly_impact]` – Displays the **environmental impact** of solar generation for the current month:  
+  Approximate **CO₂ saved** (kg) and equivalent **number of trees planted**.
+
+- `[sfd_year_summary]` – Outputs the total solar energy forecast (in kWh) for the **current year**, combining all available daily forecasts.
+
+- `[sfd_yearly_impact]` – Displays the **environmental impact** of solar generation for the current year:  
+  Approximate **CO₂ saved** (kg) and equivalent **number of trees planted**.
+
+- `[sfd_public_reports]` – Generates a **public report listing** of all forecast data:  
+  Users can click on a specific date to view a detailed forecast. The detailed view includes a chart and a table showing:  
+  - Low (10%) estimate  
+  - Expected (50%) estimate  
+  - High (90%) estimate  
+  for each time period of the day.
+
 
 == Installation ==
 

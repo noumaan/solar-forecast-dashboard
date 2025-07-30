@@ -1,10 +1,10 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-function sfd_create_reports_table() {
+function solfordash_create_reports_table() {
     global $wpdb;
 
-    $table_name = $wpdb->prefix . 'sfd_reports';
+    $table_name = $wpdb->prefix . 'solfordash_reports';
     $charset_collate = $wpdb->get_charset_collate();
 
     $sql = "CREATE TABLE $table_name (

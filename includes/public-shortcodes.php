@@ -1,17 +1,17 @@
 <?php
 
-function sfd_get_table_name( $suffix ) {
+function solfordash_get_table_name( $suffix ) {
 	global $wpdb;
 	return $wpdb->prefix . $suffix;
 }
 
-add_shortcode( 'sfd_forecast_tomorrow', 'sfd_forecast_tomorrow_shortcode' );
-function sfd_forecast_tomorrow_shortcode() {
+add_shortcode( 'solfordash_forecast_tomorrow', 'solfordash_forecast_tomorrow_shortcode' );
+function solfordash_forecast_tomorrow_shortcode() {
 	
 	global $wpdb;
 
-	$table    = sfd_get_table_name( 'sfd_reports' );
-	$timezone = get_option( 'sfd_timezone', 'Asia/Karachi' );
+	$table    = solfordash_get_table_name( 'solfordash_reports' );
+	$timezone = get_option( 'solfordash_timezone', 'Asia/Karachi' );
 	$date     = ( new DateTime( 'tomorrow', new DateTimeZone( $timezone ) ) )->format( 'Y-m-d' );
 
 	$sql      = $wpdb->prepare( "SELECT forecast_data FROM {$table} WHERE forecast_date = %s", $date );
@@ -27,13 +27,13 @@ function sfd_forecast_tomorrow_shortcode() {
 	return esc_html( round( $total, 2 ) . ' kWh' );
 }
 
-add_shortcode( 'sfd_today_generation', 'sfd_today_generation_shortcode' );
-function sfd_today_generation_shortcode() {
+add_shortcode( 'solfordash_today_generation', 'solfordash_today_generation_shortcode' );
+function solfordash_today_generation_shortcode() {
 	
 	global $wpdb;
 
-	$table    = sfd_get_table_name( 'sfd_reports' );
-	$timezone = get_option( 'sfd_timezone', 'Asia/Karachi' );
+	$table    = solfordash_get_table_name( 'solfordash_reports' );
+	$timezone = get_option( 'solfordash_timezone', 'Asia/Karachi' );
 	$date     = ( new DateTime( 'today', new DateTimeZone( $timezone ) ) )->format( 'Y-m-d' );
 
 	$sql      = $wpdb->prepare( "SELECT forecast_data FROM {$table} WHERE forecast_date = %s", $date );
@@ -49,13 +49,13 @@ function sfd_today_generation_shortcode() {
 	return esc_html( round( $total, 2 ) . ' kWh' );
 }
 
-add_shortcode( 'sfd_month_summary', 'sfd_month_summary_shortcode' );
-function sfd_month_summary_shortcode() {
+add_shortcode( 'solfordash_month_summary', 'solfordash_month_summary_shortcode' );
+function solfordash_month_summary_shortcode() {
 	
 	global $wpdb;
 
-	$table    = sfd_get_table_name( 'sfd_reports' );
-	$timezone = get_option( 'sfd_timezone', 'Asia/Karachi' );
+	$table    = solfordash_get_table_name( 'solfordash_reports' );
+	$timezone = get_option( 'solfordash_timezone', 'Asia/Karachi' );
 	$start    = ( new DateTime( 'first day of this month', new DateTimeZone( $timezone ) ) )->format( 'Y-m-d' );
 	$end      = ( new DateTime( 'tomorrow', new DateTimeZone( $timezone ) ) )->format( 'Y-m-d' );
 
@@ -71,12 +71,12 @@ function sfd_month_summary_shortcode() {
 	return esc_html( round( $total, 2 ) . ' kWh' );
 }
 
-add_shortcode( 'sfd_monthly_impact', 'sfd_monthly_impact_shortcode' );
-function sfd_monthly_impact_shortcode() {
+add_shortcode( 'solfordash_monthly_impact', 'solfordash_monthly_impact_shortcode' );
+function solfordash_monthly_impact_shortcode() {
 	global $wpdb;
 
-	$table    = sfd_get_table_name( 'sfd_reports' );
-	$timezone = get_option( 'sfd_timezone', 'Asia/Karachi' );
+	$table    = solfordash_get_table_name( 'solfordash_reports' );
+	$timezone = get_option( 'solfordash_timezone', 'Asia/Karachi' );
 	$start    = ( new DateTime( 'first day of this month', new DateTimeZone( $timezone ) ) )->format( 'Y-m-d' );
 	$end      = ( new DateTime( 'tomorrow', new DateTimeZone( $timezone ) ) )->format( 'Y-m-d' );
 
@@ -93,19 +93,18 @@ function sfd_monthly_impact_shortcode() {
 	$trees     = round( $co2_saved / 21.77 );
 
 	return sprintf(
-		// translators: 1: CO₂ saved in kg, 2: Number of trees planted
 		esc_html__( 'This month, I saved approximately %1$s kg of CO₂, which is like planting 🌳%2$s trees.', 'solar-forecast-dashboard' ),
 		'<strong>' . esc_html( $co2_saved ) . '</strong>',
 		'<strong>' . esc_html( $trees ) . '</strong>'
 	);
 }
 
-add_shortcode( 'sfd_year_summary', 'sfd_year_summary_shortcode' );
-function sfd_year_summary_shortcode() {
+add_shortcode( 'solfordash_year_summary', 'solfordash_year_summary_shortcode' );
+function solfordash_year_summary_shortcode() {
 	global $wpdb;
 
-	$table    = sfd_get_table_name( 'sfd_reports' );
-	$timezone = get_option( 'sfd_timezone', 'Asia/Karachi' );
+	$table    = solfordash_get_table_name( 'solfordash_reports' );
+	$timezone = get_option( 'solfordash_timezone', 'Asia/Karachi' );
 	$start    = ( new DateTime( 'first day of January', new DateTimeZone( $timezone ) ) )->format( 'Y-m-d' );
 	$end      = ( new DateTime( 'tomorrow', new DateTimeZone( $timezone ) ) )->format( 'Y-m-d' );
 
@@ -121,12 +120,12 @@ function sfd_year_summary_shortcode() {
 	return esc_html( round( $total, 2 ) . ' kWh' );
 }
 
-add_shortcode( 'sfd_yearly_impact', 'sfd_yearly_impact_shortcode' );
-function sfd_yearly_impact_shortcode() {
+add_shortcode( 'solfordash_yearly_impact', 'solfordash_yearly_impact_shortcode' );
+function solfordash_yearly_impact_shortcode() {
 	global $wpdb;
 
-	$table    = sfd_get_table_name( 'sfd_reports' );
-	$timezone = get_option( 'sfd_timezone', 'Asia/Karachi' );
+	$table    = solfordash_get_table_name( 'solfordash_reports' );
+	$timezone = get_option( 'solfordash_timezone', 'Asia/Karachi' );
 	$start    = ( new DateTime( 'first day of January', new DateTimeZone( $timezone ) ) )->format( 'Y-m-d' );
 	$end      = ( new DateTime( 'tomorrow', new DateTimeZone( $timezone ) ) )->format( 'Y-m-d' );
 
@@ -143,19 +142,18 @@ function sfd_yearly_impact_shortcode() {
 	$trees     = round( $co2_saved / 21.77 );
 
 	return sprintf(
-		// translators: 1: CO₂ saved in kg, 2: Number of trees planted
 		esc_html__( 'This year, my solar panels have saved %1$s kg of CO₂, equal to planting 🌳%2$s trees.', 'solar-forecast-dashboard' ),
 		'<strong>' . esc_html( $co2_saved ) . '</strong>',
 		'<strong>' . esc_html( $trees ) . '</strong>'
 	);
 }
 
-add_shortcode( 'sfd_public_reports', 'sfd_render_public_reports' );
-function sfd_render_public_reports() {
+add_shortcode( 'solfordash_public_reports', 'solfordash_render_public_reports' );
+function solfordash_render_public_reports() {
 	global $wpdb;
 
-	$table = sfd_get_table_name( 'sfd_reports' );
-	$date  = isset( $_GET['sfd_view'] ) ? sanitize_text_field( wp_unslash( $_GET['sfd_view'] ) ) : '';
+	$table = solfordash_get_table_name( 'solfordash_reports' );
+	$date  = isset( $_GET['solfordash_view'] ) ? sanitize_text_field( wp_unslash( $_GET['solfordash_view'] ) ) : '';
 
 	if ( ! empty( $date ) && preg_match( '/^\d{4}-\d{2}-\d{2}$/', $date ) ) {
 		$sql = $wpdb->prepare( "SELECT * FROM {$table} WHERE forecast_date = %s", $date );
@@ -185,16 +183,16 @@ function sfd_render_public_reports() {
 		</h2>
 
 		<?php
-		if ( get_option( 'sfd_chart_enabled' ) ) {
-			sfd_maybe_enqueue_chartjs();
-			echo '<canvas id="sfd_chart" height="400" style="width:100%; object-fit: contain; margin-bottom: 40px;"></canvas>';
+		if ( get_option( 'solfordash_chart_enabled' ) ) {
+			solfordash_maybe_enqueue_chartjs();
+			echo '<canvas id="solfordash_chart" height="400" style="width:100%; object-fit: contain; margin-bottom: 40px;"></canvas>';
 		}
 		?>
 
-		<?php if ( get_option( 'sfd_chart_enabled' ) ) : ?>
+		<?php if ( get_option( 'solfordash_chart_enabled' ) ) : ?>
 			<script>
 				document.addEventListener('DOMContentLoaded', function () {
-					const ctx = document.getElementById('sfd_chart')?.getContext('2d');
+					const ctx = document.getElementById('solfordash_chart')?.getContext('2d');
 					if (!ctx) return;
 
 					const chartData = <?php echo wp_json_encode( array_values( array_map( function ( $point ) {
@@ -288,14 +286,13 @@ function sfd_render_public_reports() {
 			</tbody>
 		</table>
 
-		<a href="<?php echo esc_url( remove_query_arg( 'sfd_view' ) ); ?>" style="display:inline-block; margin-top: 20px;">
+		<a href="<?php echo esc_url( remove_query_arg( 'solfordash_view' ) ); ?>" style="display:inline-block; margin-top: 20px;">
 			<?php echo esc_html__( '← Back to all reports', 'solar-forecast-dashboard' ); ?>
 		</a>
 		<?php
 		return ob_get_clean();
 	}
 
-	// Load full report list
 	$sql  = "SELECT forecast_date FROM {$table} ORDER BY forecast_date DESC";
 	$rows = $wpdb->get_results( $sql, ARRAY_A );
 
@@ -309,7 +306,7 @@ function sfd_render_public_reports() {
 	<ul style="list-style: none; padding-left: 0;">
 		<?php foreach ( $rows as $row ) : ?>
 			<li style="margin-bottom: 10px;">
-				<a href="<?php echo esc_url( add_query_arg( 'sfd_view', urlencode( $row['forecast_date'] ) ) ); ?>" style="text-decoration: none; color: #0073aa;">
+				<a href="<?php echo esc_url( add_query_arg( 'solfordash_view', urlencode( $row['forecast_date'] ) ) ); ?>" style="text-decoration: none; color: #0073aa;">
 					<?php echo esc_html( $row['forecast_date'] ); ?>
 				</a>
 			</li>

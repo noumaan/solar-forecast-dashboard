@@ -5,26 +5,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $wpdb;
-$table_name = $wpdb->prefix . 'sfd_reports';
+$table_name = $wpdb->prefix . 'solfordash_reports';
 
 // Handle deletion
 if ( isset( $_GET['delete'], $_GET['_wpnonce'] ) ) {
-	$date  = sanitize_text_field( wp_unslash( $_GET['delete'] ) );
-	$nonce = sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) );
+    $date  = sanitize_text_field( wp_unslash( $_GET['delete'] ) );
+    $nonce = sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) );
 
-	if ( wp_verify_nonce( $nonce, 'sfd_delete_' . $date ) ) {
-		$wpdb->delete( $table_name, [ 'forecast_date' => $date ] );
-		wp_redirect( admin_url( 'admin.php?page=sfd-reports' ) );
-		exit;
-	}
+    if ( wp_verify_nonce( $nonce, 'solfordash_delete_' . $date ) ) {
+        $wpdb->delete( $table_name, [ 'forecast_date' => $date ] );
+        wp_safe_redirect( admin_url( 'admin.php?page=solfordash-reports' ) );
+        exit;
+    }
 }
+
 
 // Handle single report view
 if ( isset( $_GET['view'], $_GET['_wpnonce'] ) ) {
 	$date  = sanitize_text_field( wp_unslash( $_GET['view'] ) );
 	$nonce = sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) );
 
-	if ( ! wp_verify_nonce( $nonce, 'sfd_view_' . $date ) ) {
+	if ( ! wp_verify_nonce( $nonce, 'solfordash_view_' . $date ) ) {
 		echo '<div class="notice notice-error"><p>' . esc_html__( 'Invalid nonce.', 'solar-forecast-dashboard' ) . '</p></div>';
 		return;
 	}
@@ -52,11 +53,11 @@ if ( isset( $_GET['view'], $_GET['_wpnonce'] ) ) {
 		<h2><?php echo esc_html( $date ); ?></h2>
 
 		<?php
-		if ( get_option( 'sfd_chart_enabled' ) ) {
-			sfd_maybe_enqueue_chartjs();
+		if ( get_option( 'solfordash_chart_enabled' ) ) {
+			solfordash_maybe_enqueue_chartjs();
 			?>
-			<div id="sfd-chart-container" style="max-width: 800px;">
-    <canvas id="sfd_chart"></canvas>
+			<div id="solfordash-chart-container" style="max-width: 800px;">
+    <canvas id="solfordash_chart"></canvas>
 </div>
 
 <script>
@@ -80,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    const ctx = document.getElementById('sfd_chart')?.getContext('2d');
+    const ctx = document.getElementById('solfordash_chart')?.getContext('2d');
     if (!ctx) return;
 
     new Chart(ctx, {
@@ -165,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		</table>
 
 		<p>
-			<a href="<?php echo esc_url( admin_url( 'admin.php?page=sfd-reports' ) ); ?>" class="button">
+			<a href="<?php echo esc_url( admin_url( 'admin.php?page=solfordash-reports' ) ); ?>" class="button">
 				<?php esc_html_e( '← Back to Reports', 'solar-forecast-dashboard' ); ?>
 			</a>
 		</p>
@@ -198,14 +199,14 @@ $results = $wpdb->get_results(
 				<tr>
 					<td><?php echo esc_html( $date ); ?></td>
 					<td>
-						<a href="<?php echo esc_url( wp_nonce_url( "admin.php?page=sfd-reports&view=$date", 'sfd_view_' . $date ) ); ?>" class="button button-primary">
+						<a href="<?php echo esc_url( wp_nonce_url( "admin.php?page=solfordash-reports&view=$date", 'solfordash_view_' . $date ) ); ?>" class="button button-primary">
 							<?php esc_html_e( 'View', 'solar-forecast-dashboard' ); ?>
 						</a>
-						<a href="<?php echo esc_url( wp_nonce_url( "admin.php?page=sfd-reports&delete=$date", 'sfd_delete_' . $date ) ); ?>" class="button button-secondary" onclick="return confirm('<?php echo esc_js( __( 'Are you sure you want to delete this report?', 'solar-forecast-dashboard' ) ); ?>');">
+						<a href="<?php echo esc_url( wp_nonce_url( "admin.php?page=solfordash-reports&delete=$date", 'solfordash_delete_' . $date ) ); ?>" class="button button-secondary" onclick="return confirm('<?php echo esc_js( __( 'Are you sure you want to delete this report?', 'solar-forecast-dashboard' ) ); ?>');">
 							<?php esc_html_e( 'Delete', 'solar-forecast-dashboard' ); ?>
 						</a>
 						<a href="<?php echo esc_url(
-							admin_url('admin-post.php?action=sfd_download_csv&date=' . $date . '&_wpnonce=' . wp_create_nonce('sfd_download_' . $date))
+							admin_url('admin-post.php?action=solfordash_download_csv&date=' . $date . '&_wpnonce=' . wp_create_nonce('solfordash_download_' . $date))
 						); ?>" class="button button-secondary">
 							<?php esc_html_e('Download CSV', 'solar-forecast-dashboard'); ?>
 						</a>
